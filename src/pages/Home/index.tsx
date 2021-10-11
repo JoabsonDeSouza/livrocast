@@ -1,18 +1,20 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-import { Text } from 'react-native';
-import { MaterialIcon } from '../../components/Icon';
-
-import { Container } from './styles';
+import { Container, Text, Button } from './styles';
+import { useApp } from '../../context/app';
 
 const Home = () => {
   const navigation: any = useNavigation();
+  const { changeTheme, theme } = useApp();
 
   return (
     <Container>
-      <MaterialIcon name="explore" size={20} color="#babadd" />
+      <Text>{`Tema: ${theme}`}</Text>
       <Text onPress={() => navigation.navigate('BookDescription')}>Home</Text>
+      <Button onPress={() => changeTheme()}>
+        <Text>{`Mudar Tema`}</Text>
+      </Button>
     </Container>
   );
 };

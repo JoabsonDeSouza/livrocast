@@ -6,12 +6,23 @@ import Search from '../pages/Search';
 import Others from '../pages/Others';
 
 import { MaterialIcon } from '../components/Icon';
+import { useTheme } from 'styled-components';
 
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+  const theme = useTheme();
+
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.background,
+        },
+        tabBarInactiveTintColor: theme.inactiveTab,
+        tabBarActiveTintColor: theme.activeTab,
+      }}>
       <Tab.Screen
         name="Home"
         component={Home}

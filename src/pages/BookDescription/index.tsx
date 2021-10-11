@@ -1,9 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
-import { Text } from 'react-native';
-
-import { Container } from './styles';
+import { Container, Text } from './styles';
 
 const BookDescription = () => {
   const navigation = useNavigation();
