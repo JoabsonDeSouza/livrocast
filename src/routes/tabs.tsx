@@ -3,7 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/Home';
 import Search from '../pages/Search';
-import Others from '../pages/Others';
+import Settings from '../pages/Settings';
 
 import { MaterialIcon } from '../components/Icon';
 import { useTheme } from 'styled-components';
@@ -34,7 +34,7 @@ function Tabs() {
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="Search"
         component={Search}
         options={{
           tabBarLabel: 'Search',
@@ -44,16 +44,12 @@ function Tabs() {
         }}
       />
       <Tab.Screen
-        name="User"
-        component={Others}
+        name="Settings"
+        component={Settings}
         options={{
-          tabBarLabel: 'User',
+          tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcon
-              name="supervised-user-circle"
-              color={color}
-              size={size}
-            />
+            <MaterialIcon name="settings" color={color} size={size} />
           ),
         }}
       />

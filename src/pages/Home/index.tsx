@@ -1,20 +1,44 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 
-import { Container, Text, Button } from './styles';
-import { useApp } from '../../context/app';
+import {
+  Container,
+  ContainerData,
+  CardOrange,
+  CardWhite,
+  CardBackground,
+  listColorsBackground,
+} from './styles';
+import Header from './Header';
+import ListBests from './ListBests';
+import ListBestSellers from './ListBestSellers';
+import { GetBestBooks } from '../../service/api';
+import { Book } from '../../model/book';
 
 const Home = () => {
-  const navigation: any = useNavigation();
-  const { changeTheme, theme } = useApp();
+  const [listBestBooks, setListBestBooks] = useState<Book[]>([]);
+
+  const initialize = async () => {
+    await GetBestBooks().then((response: any) => {
+      setListBestBooks(response.data);
+    });
+  };
+
+  useEffect(() => {
+    initialize();
+  }, []);
 
   return (
     <Container>
-      <Text>{`Tema: ${theme}`}</Text>
-      <Text onPress={() => navigation.navigate('BookDescription')}>Home</Text>
-      <Button onPress={() => changeTheme()}>
-        <Text>{`Mudar Tema`}</Text>
-      </Button>
+      <CardBackground>
+        <CardOrange colors={listColorsBackground} useAngle={true} angle={90} />
+        <CardWhite />
+      </CardBackground>
+
+      <ContainerData>
+        <Header />
+        {listBestBooks && <ListBests list={listBestBooks} />}
+        {listBestBooks && <ListBestSellers list={listBestBooks} />}
+      </ContainerData>
     </Container>
   );
 };
