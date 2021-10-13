@@ -13,9 +13,9 @@ const ListBests = ({ list }: ListBestsProps) => {
     <Container>
       <ContainerTexts>
         <Text size={30} bold style={{ marginBottom: 5 }}>
-          Best Match
+          Melhores livros
         </Text>
-        <Text>Based on your interest</Text>
+        <Text>Baseados em seus interesses</Text>
       </ContainerTexts>
 
       <List

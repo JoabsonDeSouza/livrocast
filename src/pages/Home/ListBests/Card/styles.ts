@@ -8,7 +8,7 @@ const { width } = Dimensions.get('screen');
 export const Container = styled.ImageBackground.attrs({
   resizeMode: 'stretch',
 })`
-  width: ${width - 150}px;
+  width: ${width - 200}px;
   height: 270px;
   border-radius: 8px;
   overflow: 1px;

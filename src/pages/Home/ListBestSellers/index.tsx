@@ -14,7 +14,7 @@ const ListBestSellers = ({ list }: ListBestSellersProps) => {
     <Container>
       <ContainerTexts>
         <Title>Best Sellers</Title>
-        <Text>See All</Text>
+        <Text>Ver Todos</Text>
       </ContainerTexts>
       <List
         data={list}

@@ -4,7 +4,7 @@ export const Container = styled.ImageBackground.attrs({
   resizeMode: 'stretch',
 })`
   width: 110px;
-  height: 110px;
+  height: 140px;
   border-radius: 8px;
   overflow: 1px;
   margin-right: 10px;

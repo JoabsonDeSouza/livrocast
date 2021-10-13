@@ -13,6 +13,7 @@ import ListBests from './ListBests';
 import ListBestSellers from './ListBestSellers';
 import { GetBestBooks } from '../../service/api';
 import { Book } from '../../model/book';
+import { FlatList } from 'react-native';
 
 const Home = () => {
   const [listBestBooks, setListBestBooks] = useState<Book[]>([]);
@@ -36,8 +37,18 @@ const Home = () => {
 
       <ContainerData>
         <Header />
-        {listBestBooks && <ListBests list={listBestBooks} />}
-        {listBestBooks && <ListBestSellers list={listBestBooks} />}
+        <FlatList
+          data={[]}
+          keyExtractor={undefined}
+          renderItem={undefined}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={() => (
+            <>
+              {listBestBooks && <ListBests list={listBestBooks} />}
+              {listBestBooks && <ListBestSellers list={listBestBooks} />}
+            </>
+          )}
+        />
       </ContainerData>
     </Container>
   );

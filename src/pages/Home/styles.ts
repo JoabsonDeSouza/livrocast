@@ -34,10 +34,10 @@ export const CardOrange = styled(LinearGradient)`
 `;
 
 export const listColorsBackground = [
-  `${colors.red}`,
-  `${colors.primary}`,
-  `${colors.primary}`,
   `${colors.orange}`,
+  `${colors.orange}`,
+  `${colors.primary}`,
+  `${colors.primary}`,
 ];
 
 export const CardWhite = styled.View`

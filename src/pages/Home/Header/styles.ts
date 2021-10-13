@@ -8,7 +8,7 @@ export const Container = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: center;
-  padding: 20px 15px 20px 15px;
+  padding: 20px 15px 10px 15px;
   justify-content: space-between;
 `;
 
@@ -31,3 +31,7 @@ export const Avatar = styled.Image`
   height: ${avatarSize}px;
   border-radius: ${avatarSize / 2}px;
 `;
+
+export const Logo = styled.Image.attrs({
+  resizeMode: 'contain',
+})``;
