@@ -17,19 +17,21 @@ import {
   ContainerInput,
   ContainerCheck,
   Text,
-  Button,
   Image,
 } from './styles';
+import Button from '../../components/Button';
+import { loginService } from '../../controller/auth';
 
 type screenProps = NativeStackNavigationProp<RootStackParamList, 'RouteHome'>;
 
 const Login = () => {
   const navigation = useNavigation<screenProps>();
-  const { showToast } = useApp();
+  const { showToast, logIn } = useApp();
 
   const [check, setCheck] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleCheck = () => {
     setCheck(prev => !prev);
@@ -51,8 +53,19 @@ const Login = () => {
       return;
     }
 
-    showToast('Deu bom', 'success');
-    // navigation.dispatch(StackActions.replace('RouteHome'));
+    setLoading(true);
+
+    loginService({ email, password })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+          logIn(check);
+        }, 1000);
+      })
+      .catch(() => {
+        setLoading(false);
+        showToast('Email ou senha inválidos', 'danger');
+      });
   };
 
   return (
@@ -68,12 +81,21 @@ const Login = () => {
         </Text>
 
         <ContainerInput>
-          <Input placeholder="E-mail" onChangeText={value => setEmail(value)} />
+          <Input
+            autoCapitalize="none"
+            placeholder="E-mail"
+            autoCorrect={false}
+            value={email}
+            onChangeText={value => setEmail(value)}
+          />
         </ContainerInput>
         <ContainerInput>
           <Input
-            placeholder="Password"
+            placeholder="Senha"
             secureTextEntry
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={password}
             onChangeText={value => setPassword(value)}
           />
         </ContainerInput>
@@ -101,9 +123,7 @@ const Login = () => {
           </TouchableOpacity>
         </View>
 
-        <Button onPress={handleLogin}>
-          <MaterialIcon name={'arrow-forward'} size={30} color={colors.white} />
-        </Button>
+        <Button onPress={handleLogin} loading={loading} />
       </ContainerData>
     </Container>
   );

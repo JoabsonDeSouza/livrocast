@@ -1,20 +1,27 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import useAppTheme from '../hooks/useAppTheme';
 import { useToast } from 'react-native-toast-notifications';
+import useAuth from '../hooks/useAuth';
+
+const AppContext = createContext<AppContextData>({} as AppContextData);
 
 interface AppContextData {
   theme: 'dark' | 'light';
   changeTheme(): void;
   loading: boolean;
   showToast(message: string, type: 'success' | 'danger'): void;
+  userLogged: boolean | undefined;
+  logOut(): void;
+  logIn(checked: boolean): void;
 }
-
-const AppContext = createContext<AppContextData>({} as AppContextData);
 
 const AppProvider: React.FC = ({ children }) => {
   const [currentTheme, updateCurrentTheme] = useAppTheme();
   const [loading, setLoading] = useState<boolean>(false);
+  const [userLogged, setUserLogged] = useState<boolean | undefined>();
+  const { save, logOut: authLogOut, logged } = useAuth();
+
   const toast = useToast();
 
   async function changeTheme(): Promise<void> {
@@ -32,6 +39,20 @@ const AppProvider: React.FC = ({ children }) => {
     });
   }
 
+  function logOut() {
+    setUserLogged(false);
+    authLogOut();
+  }
+
+  function logIn(checked: boolean) {
+    if (checked) save();
+    setUserLogged(true);
+  }
+
+  useEffect(() => {
+    setUserLogged(logged);
+  }, [logged]);
+
   return (
     <AppContext.Provider
       value={{
@@ -39,6 +60,9 @@ const AppProvider: React.FC = ({ children }) => {
         changeTheme,
         loading,
         showToast,
+        userLogged,
+        logOut,
+        logIn,
       }}>
       {children}
     </AppContext.Provider>

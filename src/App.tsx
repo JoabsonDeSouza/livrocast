@@ -3,23 +3,16 @@ import Routes from './routes';
 import ContextProvider from './context';
 import Theme from './context/theme';
 import SplashScreen from 'react-native-splash-screen';
-import auth from '@react-native-firebase/auth';
+import useAuth from './hooks/useAuth';
 
 const App: React.FC = () => {
+  const { logged } = useAuth();
+
   useEffect(() => {
+    if (logged === undefined) return;
+
     SplashScreen.hide();
-  });
-
-  const init = async () => {
-    const user = await auth().currentUser;
-    // if (user) {
-    console.log('user', user);
-    // }
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
+  }, [logged]);
 
   return (
     <ContextProvider>

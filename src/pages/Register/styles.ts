@@ -30,7 +30,7 @@ export const Input = styled.TextInput.attrs({
 })`
   width: 100%;
   height: 70px;
-  color: #100110;
+  color: ${({ theme }) => theme.textHeader};
 `;
 
 export const ContainerInput = styled.View`

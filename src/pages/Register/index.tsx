@@ -13,19 +13,68 @@ import {
   ContainerInput,
   ContainerCheck,
   Text,
-  Button,
   Image,
 } from './styles';
 import { validateEmail } from '../../utils/helpers';
+import { useApp } from '../../context/app';
+import { createUserService } from '../../controller/auth';
+import Button from '../../components/Button';
 
 const Register = () => {
   const navigation = useNavigation();
+  const { showToast } = useApp();
+
   const [check, setCheck] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleCheck = () => {
     setCheck(prev => !prev);
+  };
+
+  const handleRegister = () => {
+    if (!email || !password) {
+      showToast('Email e senha necessários', 'danger');
+      return;
+    }
+
+    if (!confirmPassword) {
+      showToast('Confirmação de senha necessária', 'danger');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      showToast('Email inválido', 'danger');
+      return;
+    }
+
+    if (password.length < 6) {
+      showToast('Senha inválida', 'danger');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showToast('Senhas não conferem', 'danger');
+      return;
+    }
+
+    setLoading(true);
+
+    createUserService({ email, password })
+      .then(() => {
+        showToast('Usuário criado com sucesso', 'success');
+
+        setTimeout(() => {
+          setLoading(false);
+          navigation.goBack();
+        }, 1500);
+      })
+      .catch(() => {
+        setLoading(false);
+        showToast('Email ou senha inválidos', 'danger');
+      });
   };
 
   return (
@@ -40,13 +89,35 @@ const Register = () => {
           Get Start
         </Text>
         <ContainerInput>
-          <Input placeholder="Nome" />
+          <Input
+            autoCapitalize="none"
+            placeholder="E-mail"
+            value={email}
+            autoCorrect={false}
+            onChangeText={value => setEmail(value)}
+          />
         </ContainerInput>
+
         <ContainerInput>
-          <Input placeholder="E-mail" />
+          <Input
+            placeholder="Senha"
+            secureTextEntry
+            autoCorrect={false}
+            value={password}
+            autoCapitalize="none"
+            onChangeText={value => setPassword(value)}
+          />
         </ContainerInput>
+
         <ContainerInput>
-          <Input placeholder="Password" secureTextEntry />
+          <Input
+            placeholder="Confirmar senha"
+            secureTextEntry
+            autoCorrect={false}
+            autoCapitalize="none"
+            value={confirmPassword}
+            onChangeText={value => setConfirmPassword(value)}
+          />
         </ContainerInput>
 
         <ContainerCheck>
@@ -72,9 +143,8 @@ const Register = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <Button>
-          <MaterialIcon name={'arrow-forward'} size={30} color={colors.white} />
-        </Button>
+
+        <Button onPress={handleRegister} loading={loading} />
       </ContainerData>
     </Container>
   );

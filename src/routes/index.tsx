@@ -7,24 +7,37 @@ import BookDescription from '../pages/BookDescription';
 import RouteHome from './tabs';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import useAuth from '../hooks/useAuth';
+import { useApp } from '../context/app';
 
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   RouteHome: undefined;
   BookDescription: undefined;
+  AuthRoutes: undefined;
+  AppRoutes: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const AppStack = createNativeStackNavigator<RootStackParamList>();
 
 function Routes() {
+  const { userLogged } = useApp();
+
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="RouteHome" component={RouteHome} />
-      <Stack.Screen name="BookDescription" component={BookDescription} />
-    </Stack.Navigator>
+    <AppStack.Navigator screenOptions={{ headerShown: false }}>
+      {userLogged ? (
+        <>
+          <AppStack.Screen name="RouteHome" component={RouteHome} />
+          <AppStack.Screen name="BookDescription" component={BookDescription} />
+        </>
+      ) : (
+        <>
+          <AppStack.Screen name="Login" component={Login} />
+          <AppStack.Screen name="Register" component={Register} />
+        </>
+      )}
+    </AppStack.Navigator>
   );
 }
 
