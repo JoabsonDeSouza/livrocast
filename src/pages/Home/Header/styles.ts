@@ -1,9 +1,5 @@
 import styled from 'styled-components/native';
 
-export const ContainerParent = styled.View`
-  align-items: center;
-`;
-
 export const Container = styled.View`
   width: 100%;
   flex-direction: row;
@@ -13,7 +9,8 @@ export const Container = styled.View`
 `;
 
 export const Separator = styled.View`
-  width: 93%;
+  width: 92%;
+  margin-left: 15px;
   border-bottom-width: 0.6px;
   border-color: ${({ theme }) => theme.textHeader};
 `;

@@ -3,20 +3,11 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import logo from '../../../assets/logo.png';
 
-import {
-  ContainerParent,
-  Container,
-  TextName,
-  Avatar,
-  Separator,
-  Logo,
-} from './styles';
+import { Container, TextName, Avatar, Separator, Logo } from './styles';
 
 const Header = () => {
   return (
-    <ContainerParent>
-      <SafeAreaView />
-
+    <>
       <Container>
         <Logo source={logo} />
         <Avatar
@@ -26,7 +17,7 @@ const Header = () => {
         />
       </Container>
       <Separator />
-    </ContainerParent>
+    </>
   );
 };
 

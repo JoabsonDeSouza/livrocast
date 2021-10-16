@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState } from 'react';
 
 import useAppTheme from '../hooks/useAppTheme';
+import { useToast } from 'react-native-toast-notifications';
 
 interface AppContextData {
   theme: 'dark' | 'light';
   changeTheme(): void;
   loading: boolean;
+  showToast(message: string, type: 'success' | 'danger'): void;
 }
 
 const AppContext = createContext<AppContextData>({} as AppContextData);
@@ -13,9 +15,21 @@ const AppContext = createContext<AppContextData>({} as AppContextData);
 const AppProvider: React.FC = ({ children }) => {
   const [currentTheme, updateCurrentTheme] = useAppTheme();
   const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
 
   async function changeTheme(): Promise<void> {
     updateCurrentTheme();
+  }
+
+  function showToast(message: string, type: 'success' | 'danger'): void {
+    console.log(message);
+    toast.show(message, {
+      type,
+      duration: 3000,
+      style: {
+        marginBottom: 50,
+      },
+    });
   }
 
   return (
@@ -24,6 +38,7 @@ const AppProvider: React.FC = ({ children }) => {
         theme: currentTheme,
         changeTheme,
         loading,
+        showToast,
       }}>
       {children}
     </AppContext.Provider>

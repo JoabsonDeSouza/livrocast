@@ -3,13 +3,16 @@ import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import colors from '../../styles/colors';
 
-export const Container = styled.View`
+interface ContainerProps {
+  headerSize?: number;
+}
+export const Container = styled.View<ContainerProps>`
+  padding-top: ${({ headerSize }) => headerSize || 56}px;
   flex: 1;
 `;
 
 export const ContainerData = styled.View`
-  width: 100%;
-  height: 100%;
+  flex: 1;
 `;
 
 export const Text = styled.Text`

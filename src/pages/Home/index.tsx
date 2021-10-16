@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
   Container,
@@ -29,14 +30,14 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <Container headerSize={useSafeAreaInsets().top}>
+      <Header />
       <CardBackground>
         <CardOrange colors={listColorsBackground} useAngle={true} angle={90} />
         <CardWhite />
       </CardBackground>
 
       <ContainerData>
-        <Header />
         <FlatList
           data={[]}
           keyExtractor={undefined}
